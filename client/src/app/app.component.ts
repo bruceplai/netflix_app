@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { ITitle } from './title';
+import { TitleService } from './title.service';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +9,14 @@ import { ITitle } from './title';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private apiBase = 'http://localhost:9090/';
+  public title = 'netflix';
+  public displayedColumns: string[] = ['title', 'type', 'director', 'cast'];
+  public dataSource = new MatTableDataSource<ITitle>();
 
-  title = 'netflix';
-  displayedColumns: string[] = ['title', 'rating', 'director'];
-
-  dataSource = new MatTableDataSource<ITitle>();
-
-  constructor(private http: HttpClient) {}
+  constructor(private titleService: TitleService) {}
 
   private getData() {
-    this.http.get<ITitle[]>(this.apiBase + 'titles').subscribe(response => {
-      console.log(response);
+    this.titleService.getTitles().subscribe(response => {
       this.dataSource.data = response;
     });
   }

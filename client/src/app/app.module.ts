@@ -11,17 +11,25 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { FlexModule } from '@angular/flex-layout';
 import { TruncatePipe } from './truncate.pipe';
 import { ReplaceEmpty } from './replace-empty.pipe';
+import { TitleTableComponent } from './title-table/title-table.component';
+import { TitleDetailComponent } from './title-table/title-detail/title-detail.component';
 
 @NgModule({
-  declarations: [AppComponent, TruncatePipe, ReplaceEmpty],
+  declarations: [
+    AppComponent,
+    TruncatePipe,
+    ReplaceEmpty,
+    TitleTableComponent,
+    TitleDetailComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule,
     MatTableModule,
     MatCardModule,
     MatToolbarModule,
@@ -29,7 +37,13 @@ import { ReplaceEmpty } from './replace-empty.pipe';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     FlexModule,
+    RouterModule.forRoot([
+      { path: 'search', component: TitleTableComponent },
+      { path: '', redirectTo: 'search', pathMatch: 'full' },
+      { path: '**', redirectTo: 'search', pathMatch: 'full' }
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],

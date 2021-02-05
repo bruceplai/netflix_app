@@ -1,37 +1,3 @@
-@import '../variables.scss';
-
-mat-card {
-  margin: 40px;
-}
-
-table {
-  width: 100%;
-}
-
-tr.detail-row {
-  height: 0;
-}
-
-tr.title-row:not(.expanded-row):hover {
-  background: #777;
-}
-
-tr.title-row:not(.expanded-row):active {
-  background: #efefef;
-}
-
-.title-row td {
-  border-bottom-width: 0;
-}
-
-.title-detail {
-  overflow: hidden;
-  display: flex;
-}
-
-.mat-caption {
-  color: gray;
-  span {
-    color: black;
-  }
+.menu-spacer {
+  width: 20px;
 }

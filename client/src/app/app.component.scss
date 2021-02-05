@@ -8,7 +8,30 @@ table {
   width: 100%;
 }
 
-mat-toolbar {
-  color: white;
-  background-color: $primaryColor;
+tr.detail-row {
+  height: 0;
+}
+
+tr.title-row:not(.expanded-row):hover {
+  background: #777;
+}
+
+tr.title-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.title-row td {
+  border-bottom-width: 0;
+}
+
+.title-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.mat-caption {
+  color: gray;
+  span {
+    color: black;
+  }
 }

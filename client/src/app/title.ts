@@ -1,14 +1,14 @@
 export interface ITitle {
   cast: string;
   country: string;
-  date_added: string;
+  dateAdded: string;
   description: string;
   director: string;
   duration: string;
-  listed_in: number;
+  genres: number;
+  id: string;
   rating: string;
-  release_year: string;
-  show_id: string;
+  releaseYear: string;
   title: string;
   type: string;
 }

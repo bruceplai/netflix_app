@@ -12,7 +12,14 @@ import { TitleService } from './title.service';
 })
 export class AppComponent implements OnInit {
   public title = 'netflix';
-  public displayedColumns: string[] = ['title', 'type', 'category', 'director', 'cast'];
+  public displayedColumns: string[] = [
+    'title',
+    'type',
+    'category',
+    'director',
+    'cast',
+  ];
+
   public dataSource = new MatTableDataSource<ITitle>();
 
   constructor(private titleService: TitleService) {}

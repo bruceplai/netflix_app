@@ -11,11 +11,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FlexModule } from '@angular/flex-layout';
+import { TruncatePipe } from './truncate.pipe';
+import { ReplaceEmpty } from './replace-empty.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TruncatePipe, ReplaceEmpty],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
     MatTableModule,
     MatCardModule,
     MatToolbarModule,
@@ -23,9 +29,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule,
+    FlexModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

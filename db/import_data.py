@@ -30,12 +30,16 @@ colNames = [
   'description'
 ]
 df = pd.read_csv(data_file, usecols=colNames)
-df = df.rename(columns={'show_id':'id', 'date_added': 'dateAdded', 'release_year': 'releaseYear', 'listed_in': 'genres'})
+df = df.rename(columns={'show_id':'id', 'date_added': 'dateAdded', 'release_year': 'releaseYear', 'listed_in': 'genre'})
 df.to_sql('titles', db_conn)
 
 # cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE director LIKE '%good%' GROUP BY releaseYear")
 # for row in cur.fetchall():
 #   print(row)
+
+cur.execute("SELECT * FROM titles WHERE title LIKE %good%")
+for row in cur.fetchall():
+  print(row)
 
 db_conn.close()
 

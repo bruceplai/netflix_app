@@ -1,6 +1,7 @@
 import os
 import logging
 
+from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from controller import Controller
@@ -26,13 +27,27 @@ app.add_middleware(
 def get_base():
   return 'Netflix data server app'
 
-@app.get('/titles')
-def get_titles():
-  return cltr.get_titles()
+@app.get('/title')
+def get_titles(id: Optional[str] = None, title: Optional[str] = None, director: Optional[str] = None):
+  if id:
+    return cltr.get_title(id)
+  return cltr.get_titles(title, director)
 
-@app.get('/title/{id}')
-def get_title(id: str):
-  return cltr.get_title(id)
+@app.get('/year')
+def get_years(title: Optional[str] = None, director: Optional[str] = None):
+  return cltr.get_years(title, director)
+
+@app.get('/rating')
+def get_ratings(title: Optional[str] = None, director: Optional[str] = None):
+  return cltr.get_ratings(title, director)
+
+@app.get('/country')
+def get_countries(title: Optional[str] = None, director: Optional[str] = None):
+  return cltr.get_countries(title, director)
+
+@app.get('/genre')
+def get_genres(title: Optional[str] = None, director: Optional[str] = None):
+  return cltr.get_genres(title, director)
 
 if __name__ == '__main__':
   import uvicorn

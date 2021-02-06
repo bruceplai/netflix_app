@@ -42,7 +42,7 @@ export class TitleTableComponent implements OnInit {
 
   constructor(private titleService: TitleService) {}
 
-  private getData() {
+  private getData(): void {
     this.titleService.getTitles().subscribe((response) => {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -50,7 +50,7 @@ export class TitleTableComponent implements OnInit {
     });
   }
 
-  public doFilter(value: string) {
+  public doFilter(value: string): void {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 

@@ -17,6 +17,8 @@ import { TruncatePipe } from './truncate.pipe';
 import { ReplaceEmpty } from './replace-empty.pipe';
 import { TitleTableComponent } from './title-table/title-table.component';
 import { TitleDetailComponent } from './title-table/title-detail/title-detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { TitleDetailComponent } from './title-table/title-detail/title-detail.co
     ReplaceEmpty,
     TitleTableComponent,
     TitleDetailComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,10 +42,12 @@ import { TitleDetailComponent } from './title-table/title-detail/title-detail.co
     MatInputModule,
     MatButtonModule,
     FlexModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: 'search', component: TitleTableComponent },
+      { path: 'stats', component: DashboardComponent },
       { path: '', redirectTo: 'search', pathMatch: 'full' },
-      { path: '**', redirectTo: 'search', pathMatch: 'full' }
+      { path: '**', redirectTo: 'search', pathMatch: 'full' },
     ]),
   ],
   providers: [],

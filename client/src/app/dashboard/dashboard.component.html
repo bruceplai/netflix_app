@@ -1,0 +1,8 @@
+<mat-card fxLayout fxFlexLayout="center center">
+    <mat-form-field fxFlex="30%">
+      <input matInput type="text" [(ngModel)]="titleFilter" (keyup)="doFilter()" placeholder="Title Filter">
+    </mat-form-field>
+    <mat-form-field fxFlex="30%">
+      <input matInput type="text" [(ngModel)]="directorFilter" (keyup)="doFilter()" placeholder="Director Filter">
+    </mat-form-field>
+</mat-card>

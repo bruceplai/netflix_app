@@ -32,7 +32,7 @@ export class TitleTableComponent implements OnInit {
   public displayedColumns: string[] = [
     'title',
     'type',
-    'genres',
+    'genre',
     'director',
     'cast',
   ];

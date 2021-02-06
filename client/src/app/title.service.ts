@@ -10,7 +10,7 @@ export class TitleService {
   constructor(private http: HttpClient) {}
 
   public getTitles(): Observable<ITitle[]> {
-    return this.http.get<ITitle[]>(API_BASE + 'titles');
+    return this.http.get<ITitle[]>(API_BASE + 'title');
   }
 
   public getTitle(id: string): Observable<ITitle> {

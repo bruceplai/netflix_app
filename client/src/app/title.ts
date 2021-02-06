@@ -5,10 +5,10 @@ export interface ITitle {
   description: string;
   director: string;
   duration: string;
-  genres: number;
+  genre: string;
   id: string;
   rating: string;
-  releaseYear: string;
+  releaseYear: number;
   title: string;
   type: string;
 }

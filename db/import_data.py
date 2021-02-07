@@ -1,3 +1,21 @@
+"""
+Import Netflix CSV data into netflix.db titles table
+
+titles table columns: 
+  'id',
+  'type',
+  'title',
+  'director',
+  'cast',
+  'country',
+  'dateAdded',
+  'releaseYear',
+  'rating',
+  'duration',
+  'genre',
+  'description'
+"""
+
 import os
 import sqlite3
 import logging
@@ -33,13 +51,9 @@ df = pd.read_csv(data_file, usecols=colNames)
 df = df.rename(columns={'show_id':'id', 'date_added': 'dateAdded', 'release_year': 'releaseYear', 'listed_in': 'genre'})
 df.to_sql('titles', db_conn)
 
-# cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE director LIKE '%good%' GROUP BY releaseYear")
+# cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE cast LIKE '%john%' GROUP BY releaseYear LIMIT 3")
 # for row in cur.fetchall():
 #   print(row)
-
-cur.execute("SELECT * FROM titles WHERE title LIKE %good%")
-for row in cur.fetchall():
-  print(row)
 
 db_conn.close()
 

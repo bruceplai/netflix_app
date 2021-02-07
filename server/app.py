@@ -1,3 +1,7 @@
+"""
+Netflix data API app
+"""
+
 import os
 import logging
 
@@ -25,29 +29,29 @@ app.add_middleware(
 
 @app.get('/')
 async def get_base():
-  return 'Netflix data server app'
+  return 'Netflix data app'
 
 @app.get('/title')
 async def get_titles(id: Optional[str] = None, title: Optional[str] = None, director: Optional[str] = None):
   if id:
-    return cltr.get_title(id)
-  return cltr.get_titles(title, director)
+    return cltr.model.get_title(id)
+  return cltr.model.get_titles(title, director)
 
 @app.get('/year')
 async def get_years(title: Optional[str] = None, director: Optional[str] = None):
-  return cltr.get_years(title, director)
+  return cltr.model.get_years(title, director)
 
 @app.get('/rating')
 async def get_ratings(title: Optional[str] = None, director: Optional[str] = None):
-  return cltr.get_ratings(title, director)
+  return cltr.model.get_ratings(title, director)
 
 @app.get('/country')
 async def get_countries(title: Optional[str] = None, director: Optional[str] = None):
-  return cltr.get_countries(title, director)
+  return cltr.model.get_countries(title, director)
 
 @app.get('/genre')
 async def get_genres(title: Optional[str] = None, director: Optional[str] = None):
-  return cltr.get_genres(title, director)
+  return cltr.model.get_genres(title, director)
 
 if __name__ == '__main__':
   import uvicorn

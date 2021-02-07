@@ -28,6 +28,9 @@ import {
   ],
 })
 export class TitleTableComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   public title = 'netflix';
   public displayedColumns: string[] = [
     'title',
@@ -53,9 +56,6 @@ export class TitleTableComponent implements OnInit {
   public doFilter(value: string): void {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
     this.getData();

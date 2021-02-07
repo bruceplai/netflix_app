@@ -1,1 +1,15 @@
-<p>chart works!</p>
+<mat-card [ngClass]="'chart-container dark'">
+  <div>
+    <ngx-charts-bar-vertical
+      [results]="chartData"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [rotateXAxisTicks]="rotateXAxisTicks"
+      [xAxisLabel]="chartLabel"
+      [yAxisLabel]="'No of Shows or Movies'">
+    </ngx-charts-bar-vertical>
+  </div>
+</mat-card>

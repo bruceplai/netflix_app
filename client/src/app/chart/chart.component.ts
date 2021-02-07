@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IDataPoint } from '../data-point';
 
 @Component({
-  selector: 'app-chart',
+  selector: 'chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent {
+  @Input() chartLabel: string;
+  @Input() chartData: IDataPoint;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  showYAxisLabel = true;
+  rotateXAxisTicks = true;
 }

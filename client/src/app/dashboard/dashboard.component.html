@@ -1,8 +1,15 @@
-<mat-card fxLayout fxFlexLayout="center center">
+<div fxLayout="column" fxLayoutGap="20px">
+  <mat-card fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex="30%">
-      <input matInput type="text" [(ngModel)]="titleFilter" (keyup)="doFilter()" placeholder="Title Filter">
+      <input matInput type="text" [(ngModel)]="titleFilter" (keyup)="onTitleFilterChanged($event.target.value)" placeholder="Title Filter">
     </mat-form-field>
     <mat-form-field fxFlex="30%">
-      <input matInput type="text" [(ngModel)]="directorFilter" (keyup)="doFilter()" placeholder="Director Filter">
+      <input matInput type="text" [(ngModel)]="directorFilter" (keyup)="onDirectorFilterChanged($event.target.value)" placeholder="Director Filter">
     </mat-form-field>
-</mat-card>
+  </mat-card>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <chart fxFlex="33%" [chartLabel]="'Genre'" [chartData]="genreData"></chart>
+    <chart fxFlex="33%" [chartLabel]="'Year released'" [chartData]="yearData"></chart>
+    <chart fxFlex="33%" [chartLabel]="'Country released'" [chartData]="countryData"></chart>
+  </div>
+</div>

@@ -53,11 +53,17 @@ colNames = [
   'description'
 ]
 df = pd.read_csv(data_file, usecols=colNames)
-df = df.rename(columns={'show_id':'id', 'date_added': 'dateAdded', 'release_year': 'releaseYear', 'listed_in': 'genre'})
+df = df.rename(columns={
+  'show_id':'id',
+  'date_added': 'dateAdded',
+  'release_year': 'releaseYear',
+  'listed_in': 'genre',
+  'cast': 'castList'
+})
 df.to_sql('titles', db_conn)
 
 # try:
-#   cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE cast LIKE '%john%' GROUP BY releaseYear LIMIT 3")
+#   cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE castList LIKE '%john%' GROUP BY releaseYear LIMIT 3")
 #   for row in cur.fetchall():
 #     print(row)
 # except OperationalError as oe:

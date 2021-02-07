@@ -1,5 +1,9 @@
 import sqlite3
 
+from typing import List
+from title import Title
+from data_point import DataPoint
+
 class Model:
   """
   Application model that queries data stored in SQLite netflix.db titles table
@@ -21,24 +25,24 @@ class Model:
   def __init__(self) -> None:
     self.db_file = '/tmp/db/netflix.db'
   
-  def get_title(self, id: str):
+  def get_title(self, id: str) -> Title:
     """
     Get title data by id, which is matched to id in the titles table
     """
     db_conn = sqlite3.connect(self.db_file)
     with db_conn:
       cursor = db_conn.cursor()
-      query = cursor.execute("SELECT * FROM titles WHERE show_id = ?", [id])
+      query = cursor.execute("SELECT * FROM titles WHERE id = ?", [id])
       colnames = [des[0] for des in query.description]
       result = cursor.fetchone()
       if not result:
         return None
-      result_dict = {}
+      title = {}
       for i in range(len(colnames)):
-        result_dict[colnames[i]] = result[i]
-    return result_dict
+        title[colnames[i]] = result[i] or ""
+    return Title(**title)
 
-  def get_titles(self, title: str, director: str):
+  def get_titles(self, title: str, director: str) -> List[Title]:
     """
     Get data for multiple titles by searching by partial title and/or director matches.
     """
@@ -59,13 +63,13 @@ class Model:
         query = cur.execute("SELECT * FROM titles")
       colnames = [des[0] for des in query.description]
       for row in cur.fetchall():
-        row_dict = {}
+        title = {}
         for i in range(len(colnames)):
-          row_dict[colnames[i]] = row[i]
-        results.append(row_dict)
+          title[colnames[i]] = row[i] or ""
+        results.append(Title(**title))
     return results
 
-  def __query_by_group(self, col: str, **kwargs):
+  def __query_by_group(self, col: str, **kwargs) -> List[DataPoint]:
     """
     Query that returns counts grouped by input column.
     Optional filter args can be passed in.
@@ -86,16 +90,12 @@ class Model:
         FROM titles \
         WHERE {col} IS NOT NULL {query_addon} \
         GROUP BY {col}"
-      query = cur.execute(query_str)
-      colnames = [des[0] for des in query.description]
+      cur.execute(query_str)
       for row in cur.fetchall():
-        row_dict = {}
-        for i in range(len(colnames)):
-          row_dict[colnames[i]] = row[i]
-        results.append(row_dict)
+        results.append(DataPoint(**{ 'name': str(row[0]), 'value': row[1] }))
     return results
 
-  def __query_and_post_process(self, col: str, **kwargs):
+  def __query_and_post_process(self, col: str, **kwargs) -> List[DataPoint]:
     """
     Query that returns counts grouped by comma separated values in input column.
     Post processing is required for columns that have comma separated lists
@@ -126,7 +126,7 @@ class Model:
           else:
             result_dict[val] += 1
     for item in result_dict.items():
-      results.append({'name': item[0], 'value': item[1]})
+      results.append({ 'name': str(item[0]), 'value': item[1] })
     return results
 
   def get_years(self, title: str, director: str):

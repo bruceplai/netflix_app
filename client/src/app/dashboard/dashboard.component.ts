@@ -16,8 +16,8 @@ export class DashboardComponent implements OnInit {
   public genreData: IDataPoint[];
   public countryData: IDataPoint[];
 
-  public titleFilterChanged: Subject<string> = new Subject<string>();
-  public directorFilterChanged: Subject<string> = new Subject<string>();
+  private titleFilterChanged: Subject<string> = new Subject<string>();
+  private directorFilterChanged: Subject<string> = new Subject<string>();
 
   constructor(private titleService: TitleService) {}
 

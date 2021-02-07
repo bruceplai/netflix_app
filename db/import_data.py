@@ -6,7 +6,7 @@ titles table columns:
   'type',
   'title',
   'director',
-  'cast',
+  'castList',
   'country',
   'dateAdded',
   'releaseYear',

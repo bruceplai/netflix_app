@@ -40,26 +40,47 @@ async def get_base():
   return 'Netflix data app'
 
 @app.get('/title')
-async def get_titles(id: Optional[str] = None, title: Optional[str] = None, director: Optional[str] = None) -> List[Title]:
+async def get_titles(
+  id: Optional[str] = None,
+  title: Optional[str] = None,
+  director: Optional[str] = None,
+  actor: Optional[str] = None
+) -> List[Title]:
   if id:
     return [cltr.model.get_title(id)]
-  return cltr.model.get_titles(title, director)
+  return cltr.model.get_titles(title, director, actor)
 
 @app.get('/year')
-async def get_years(title: Optional[str] = None, director: Optional[str] = None) -> List[DataPoint]:
-  return cltr.model.get_years(title, director)
+async def get_years(
+  title: Optional[str] = None,
+  director: Optional[str] = None,
+  actor: Optional[str] = None
+) -> List[DataPoint]:
+  return cltr.model.get_years(title, director, actor)
 
 @app.get('/rating')
-async def get_ratings(title: Optional[str] = None, director: Optional[str] = None) -> List[DataPoint]:
-  return cltr.model.get_ratings(title, director)
+async def get_ratings(
+  title: Optional[str] = None,
+  director: Optional[str] = None,
+  actor: Optional[str] = None
+) -> List[DataPoint]:
+  return cltr.model.get_ratings(title, director, actor)
 
 @app.get('/country')
-async def get_countries(title: Optional[str] = None, director: Optional[str] = None) -> List[DataPoint]:
-  return cltr.model.get_countries(title, director)
+async def get_countries(
+  title: Optional[str] = None,
+  director: Optional[str] = None,
+  actor: Optional[str] = None
+) -> List[DataPoint]:
+  return cltr.model.get_countries(title, director, actor)
 
 @app.get('/genre')
-async def get_genres(title: Optional[str] = None, director: Optional[str] = None) -> List[DataPoint]:
-  return cltr.model.get_genres(title, director)
+async def get_genres(
+  title: Optional[str] = None,
+  director: Optional[str] = None,
+  actor: Optional[str] = None
+) -> List[DataPoint]:
+  return cltr.model.get_genres(title, director, actor)
 
 if __name__ == '__main__':
   import uvicorn

@@ -5,7 +5,7 @@ class Title(BaseModel):
   type: str
   title: str
   director: str
-  cast: str
+  castList: str
   country: str
   dateAdded: str
   releaseYear: str

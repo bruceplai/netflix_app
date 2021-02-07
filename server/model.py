@@ -16,7 +16,7 @@ class Model:
     'type',
     'title',
     'director',
-    'cast',
+    'castList',
     'country',
     'dateAdded',
     'releaseYear',
@@ -49,7 +49,7 @@ class Model:
     except ValidationError as ve:
       self.logger.error(ve.errors())
 
-  def get_titles(self, title: str, director: str) -> List[Title]:
+  def get_titles(self, title: str, director: str, actor: str) -> List[Title]:
     """
     Get data for multiple titles by searching by partial title and/or director matches.
     """
@@ -59,6 +59,8 @@ class Model:
       query_addon.append(f"title LIKE '%{title}%'")
     if director:
       query_addon.append(f"director LIKE '%{director}%'")
+    if actor:
+      query_addon.append(f"castList LIKE '%{actor}%'")
     if query_addon:
       query_addon = " AND ".join(query_addon)
     db_conn = sqlite3.connect(self.db_file)
@@ -145,26 +147,46 @@ class Model:
         self.logger.error(ve.errors())
     return results
 
-  def get_years(self, title: str, director: str):
+  def get_years(self, title: str, director: str, actor: str):
     """
     Get release year data for partial title and/or director matches.
     """
-    return self.__query_by_group('releaseYear', title=title, director=director)
+    return self.__query_by_group(
+      'releaseYear',
+      title=title,
+      director=director,
+      castList=actor,
+    )
 
-  def get_ratings(self, title: str, director: str):
+  def get_ratings(self, title: str, director: str, actor: str):
     """
     Get rating data for partial title and/or director matches.
     """
-    return self.__query_by_group('rating', title=title, director=director)
+    return self.__query_by_group(
+      'rating',
+      title=title,
+      director=director,
+      castList=actor,
+    )
 
-  def get_countries(self, title: str, director: str):
+  def get_countries(self, title: str, director: str, actor: str):
     """
     Get release country data for partial title and/or director matches.
     """
-    return self.__query_and_post_process('country', title=title, director=director)
+    return self.__query_and_post_process(
+      'country',
+      title=title,
+      director=director,
+      castList=actor,
+    )
 
-  def get_genres(self, title: str, director: str):
+  def get_genres(self, title: str, director: str, actor: str):
     """
     Get release country data for partial title and/or director matches.
     """
-    return self.__query_and_post_process('genre', title=title, director=director)
+    return self.__query_and_post_process(
+      'genre',
+      title=title,
+      director=director,
+      castList=actor,
+    )

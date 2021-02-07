@@ -12,18 +12,20 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class DashboardComponent implements OnInit {
   public titleFilter: string | null;
   public directorFilter: string | null;
+  public actorFilter: string | null;
   public yearData: IDataPoint[];
   public genreData: IDataPoint[];
   public countryData: IDataPoint[];
 
   private titleFilterChanged: Subject<string> = new Subject<string>();
   private directorFilterChanged: Subject<string> = new Subject<string>();
+  private actorFilterChanged: Subject<string> = new Subject<string>();
 
   constructor(private titleService: TitleService) {}
 
   private getYears(): void {
     this.titleService
-      .getYears(this.titleFilter, this.directorFilter)
+      .getYears(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
         this.yearData = [...response];
       });
@@ -31,7 +33,7 @@ export class DashboardComponent implements OnInit {
 
   private getGenres(): void {
     this.titleService
-      .getGenres(this.titleFilter, this.directorFilter)
+      .getGenres(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
         this.genreData = [...response];
       });
@@ -39,7 +41,7 @@ export class DashboardComponent implements OnInit {
 
   private getCountries(): void {
     this.titleService
-      .getCountries(this.titleFilter, this.directorFilter)
+      .getCountries(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
         this.countryData = [...response];
       });
@@ -71,6 +73,17 @@ export class DashboardComponent implements OnInit {
         });
     }
     this.directorFilterChanged.next(filterText);
+  }
+
+  public onActorFilterChanged(filterText: string): void {
+    if (this.actorFilterChanged.observers.length === 0) {
+      this.actorFilterChanged
+        .pipe(debounceTime(500), distinctUntilChanged())
+        .subscribe((response) => {
+          this.getAllData();
+        });
+    }
+    this.actorFilterChanged.next(filterText);
   }
 
   ngOnInit(): void {

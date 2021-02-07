@@ -1,10 +1,28 @@
 <div fxLayout="column" fxLayoutGap="20px">
   <mat-card fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex="30%">
-      <input matInput type="text" [(ngModel)]="titleFilter" (keyup)="onTitleFilterChanged($event.target.value)" placeholder="Title Filter">
+    <mat-form-field fxFlex="20%">
+      <input 
+        matInput
+        type="text"
+        [(ngModel)]="titleFilter"
+        (keyup)="onTitleFilterChanged($event.target.value)"
+        placeholder="Title Filter">
     </mat-form-field>
-    <mat-form-field fxFlex="30%">
-      <input matInput type="text" [(ngModel)]="directorFilter" (keyup)="onDirectorFilterChanged($event.target.value)" placeholder="Director Filter">
+    <mat-form-field fxFlex="20%">
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="directorFilter"
+        (keyup)="onDirectorFilterChanged($event.target.value)"
+        placeholder="Director Filter">
+    </mat-form-field>
+    <mat-form-field fxFlex="20%">
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="actorFilter"
+        (keyup)="onActorFilterChanged($event.target.value)"
+        placeholder="Actor/Actress Filter">
     </mat-form-field>
   </mat-card>
   <div fxLayout="row" fxLayoutAlign="space-between">

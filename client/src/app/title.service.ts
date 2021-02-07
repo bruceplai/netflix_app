@@ -10,10 +10,11 @@ const API_BASE = 'http://localhost:9090';
 export class TitleService {
   constructor(private http: HttpClient) {}
 
-  public getTitles(
+  private generateParams(
     title: string = null,
-    director: string = null
-  ): Observable<ITitle[]> {
+    director: string = null,
+    actor: string = null
+  ): HttpParams {
     let params = new HttpParams();
     if (title) {
       params = params.append('title', title);
@@ -21,6 +22,18 @@ export class TitleService {
     if (director) {
       params = params.append('director', director);
     }
+    if (actor) {
+      params = params.append('actor', actor);
+    }
+    return params;
+  }
+
+  public getTitles(
+    title: string = null,
+    director: string = null,
+    actor: string = null
+  ): Observable<ITitle[]> {
+    const params = this.generateParams(title, director, actor);
     return this.http.get<ITitle[]>(API_BASE + '/title', { params: params });
   }
 
@@ -31,57 +44,37 @@ export class TitleService {
 
   public getYears(
     title: string = null,
-    director: string = null
+    director: string = null,
+    actor: string = null
   ): Observable<IDataPoint[]> {
-    let params = new HttpParams();
-    if (title) {
-      params = params.append('title', title);
-    }
-    if (director) {
-      params = params.append('director', director);
-    }
+    const params = this.generateParams(title, director, actor);
     return this.http.get<IDataPoint[]>(API_BASE + '/year', { params: params });
   }
 
   public getRatings(
     title: string = null,
-    director: string = null
+    director: string = null,
+    actor: string = null
   ): Observable<IDataPoint[]> {
-    let params = new HttpParams();
-    if (title) {
-      params = params.append('title', title);
-    }
-    if (director) {
-      params = params.append('director', director);
-    }
+    const params = this.generateParams(title, director, actor);
     return this.http.get<IDataPoint[]>(API_BASE + '/rating', { params: params });
   }
 
   public getGenres(
     title: string = null,
-    director: string = null
+    director: string = null,
+    actor: string = null
   ): Observable<IDataPoint[]> {
-    let params = new HttpParams();
-    if (title) {
-      params = params.append('title', title);
-    }
-    if (director) {
-      params = params.append('director', director);
-    }
+    const params = this.generateParams(title, director, actor);
     return this.http.get<IDataPoint[]>(API_BASE + '/genre', { params: params });
   }
 
   public getCountries(
     title: string = null,
-    director: string = null
+    director: string = null,
+    actor: string = null
   ): Observable<IDataPoint[]> {
-    let params = new HttpParams();
-    if (title) {
-      params = params.append('title', title);
-    }
-    if (director) {
-      params = params.append('director', director);
-    }
+    const params = this.generateParams(title, director, actor);
     return this.http.get<IDataPoint[]>(API_BASE + '/country', { params: params });
   }
 }

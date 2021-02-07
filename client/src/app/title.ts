@@ -1,5 +1,5 @@
 export interface ITitle {
-  cast: string;
+  castList: string;
   country: string;
   dateAdded: string;
   description: string;

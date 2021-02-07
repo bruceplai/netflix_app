@@ -37,7 +37,7 @@ export class TitleTableComponent implements OnInit {
     'type',
     'genre',
     'director',
-    'cast',
+    'castList',
   ];
 
   public dataSource = new MatTableDataSource<ITitle>();

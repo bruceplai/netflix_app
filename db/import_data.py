@@ -21,7 +21,12 @@ import sqlite3
 import logging
 import pandas as pd
 
+from sqlite3 import OperationalError
+
 logger = logging.getLogger('import_data')
+working_path = os.path.abspath(__file__)
+working_dir = os.path.dirname(working_path)
+os.chdir(working_dir)
 
 db_path = '/tmp/db'
 db_file = 'netflix.db'
@@ -51,9 +56,12 @@ df = pd.read_csv(data_file, usecols=colNames)
 df = df.rename(columns={'show_id':'id', 'date_added': 'dateAdded', 'release_year': 'releaseYear', 'listed_in': 'genre'})
 df.to_sql('titles', db_conn)
 
-# cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE cast LIKE '%john%' GROUP BY releaseYear LIMIT 3")
-# for row in cur.fetchall():
-#   print(row)
+# try:
+#   cur.execute("SELECT releaseYear, COUNT(releaseYear) FROM titles WHERE cast LIKE '%john%' GROUP BY releaseYear LIMIT 3")
+#   for row in cur.fetchall():
+#     print(row)
+# except OperationalError as oe:
+#   logger.error(oe)
 
 db_conn.close()
 

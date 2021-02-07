@@ -1,8 +1,11 @@
 import sqlite3
+import logging
 
 from typing import List
 from title import Title
 from data_point import DataPoint
+
+from pydantic.error_wrappers import ValidationError
 
 class Model:
   """
@@ -24,7 +27,8 @@ class Model:
   """
   def __init__(self) -> None:
     self.db_file = '/tmp/db/netflix.db'
-  
+    self.logger = logging.getLogger('model')
+
   def get_title(self, id: str) -> Title:
     """
     Get title data by id, which is matched to id in the titles table
@@ -40,7 +44,10 @@ class Model:
       title = {}
       for i in range(len(colnames)):
         title[colnames[i]] = result[i] or ""
-    return Title(**title)
+    try:
+      return Title(**title)
+    except ValidationError as ve:
+      self.logger.error(ve.errors())
 
   def get_titles(self, title: str, director: str) -> List[Title]:
     """
@@ -66,7 +73,10 @@ class Model:
         title = {}
         for i in range(len(colnames)):
           title[colnames[i]] = row[i] or ""
-        results.append(Title(**title))
+        try:
+          results.append(Title(**title))
+        except ValidationError as ve:
+          self.logger.error(ve.errors())
     return results
 
   def __query_by_group(self, col: str, **kwargs) -> List[DataPoint]:
@@ -92,7 +102,10 @@ class Model:
         GROUP BY {col}"
       cur.execute(query_str)
       for row in cur.fetchall():
-        results.append(DataPoint(**{ 'name': str(row[0]), 'value': row[1] }))
+        try:
+          results.append(DataPoint(**{ 'name': row[0], 'value': row[1] }))
+        except ValidationError as ve:
+          self.logger.error(ve.errors())
     return results
 
   def __query_and_post_process(self, col: str, **kwargs) -> List[DataPoint]:
@@ -126,7 +139,10 @@ class Model:
           else:
             result_dict[val] += 1
     for item in result_dict.items():
-      results.append({ 'name': str(item[0]), 'value': item[1] })
+      try:
+        results.append(DataPoint(**{ 'name': item[0], 'value': item[1] }))
+      except ValidationError as ve:
+        self.logger.error(ve.errors())
     return results
 
   def get_years(self, title: str, director: str):
@@ -135,7 +151,7 @@ class Model:
     """
     return self.__query_by_group('releaseYear', title=title, director=director)
 
-  def get_ratings(self, title, director):
+  def get_ratings(self, title: str, director: str):
     """
     Get rating data for partial title and/or director matches.
     """
@@ -147,7 +163,7 @@ class Model:
     """
     return self.__query_and_post_process('country', title=title, director=director)
 
-  def get_genres(self, title, director):
+  def get_genres(self, title: str, director: str):
     """
     Get release country data for partial title and/or director matches.
     """

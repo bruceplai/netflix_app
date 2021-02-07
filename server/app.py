@@ -13,8 +13,6 @@ from controller import Controller
 from title import Title
 from data_point import DataPoint
 
-logger = logging.getLogger('app')
-
 app = FastAPI()
 cltr = Controller()
 
@@ -29,6 +27,13 @@ app.add_middleware(
   allow_methods=['*'],
   allow_headers=['*']
 )
+
+logger = logging.getLogger('app')
+app_path = os.path.abspath(__file__)
+app_dir = os.path.dirname(app_path)
+os.chdir(app_dir)
+if 'APP_ENV' in os.environ and os.environ['APP_ENV'].lower() == 'dev':
+    logger.setLevel(logging.DEBUG)
 
 @app.get('/')
 async def get_base():

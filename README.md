@@ -34,7 +34,7 @@ for genre, year released, and country released are displayed.
 
 ## Installation and Setup
 
-The steps below apply to localhost installation.
+The steps below apply to localhost installation.  A few additional steps may be required to run in a cloud setting.
 For quick install, it is assumed that you have docker and docker-compose installed.
 For manual steps look at the Manual Setup section
 

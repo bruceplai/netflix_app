@@ -1,0 +1,16 @@
+services:
+  n_client: # netflix app front end
+    build:
+      context: client
+      dockerfile: .docker/prod.dockerfile
+    image: n_client
+    container_name: n_client
+    ports:
+    - "80:80"
+  
+  n_server: # netflix app back end
+    build: .
+    image: n_server
+    container_name: n_server
+    ports:
+    - "9090:9090"

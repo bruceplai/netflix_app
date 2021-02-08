@@ -15,4 +15,4 @@ else
     echo "Starting app server in normal mode..."
 fi
 
-uvicorn app:app --host localhost --port $PORT $UV_ARGS
+uvicorn app:app --host 0.0.0.0 --port $PORT $UV_ARGS

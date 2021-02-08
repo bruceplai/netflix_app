@@ -3,11 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ITitle } from './title';
 import { IDataPoint } from './data-point';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';
 
-const API_BASE = environment.production
-  ? 'http://brucenetflixapp.com:9090'
-  : 'http://localhost:9090';
+const API_BASE = 'http://' + location.host + ':9090';
 
 @Injectable({ providedIn: 'root' })
 export class TitleService {

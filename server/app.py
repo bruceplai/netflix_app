@@ -19,7 +19,7 @@ cltr = Controller()
 origins = [
   'http://localhost:4200',
   'http://localhost',
-  'https://brucenetflixapp.com'
+  'http://brucenetflixapp.com'
 ]
 
 app.add_middleware(

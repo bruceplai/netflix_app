@@ -69,7 +69,7 @@ ng serve
 ```
 The server and client will be available on port 9090 and 4200 of localhost.
 
-## Future enhancements
--SSL support
--Implement login for dashboard
--Add poster images to title details
+## Possible future enhancements
+-SSL support </br>
+-Implement login for dashboard </br>
+-Add poster images to title details </br>

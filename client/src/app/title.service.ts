@@ -4,7 +4,7 @@ import { ITitle } from './title';
 import { IDataPoint } from './data-point';
 import { Observable } from 'rxjs';
 
-const API_BASE = 'http://' + location.host + ':9090';
+const API_BASE = 'http://' + location.hostname + ':9090';
 
 @Injectable({ providedIn: 'root' })
 export class TitleService {

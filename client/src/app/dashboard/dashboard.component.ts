@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
     this.titleService
       .getYears(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
-        this.yearData = [...response];
+        this.yearData = response;
       });
   }
 
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.titleService
       .getGenres(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
-        this.genreData = [...response];
+        this.genreData = response;
       });
   }
 
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     this.titleService
       .getCountries(this.titleFilter, this.directorFilter, this.actorFilter)
       .subscribe((response) => {
-        this.countryData = [...response];
+        this.countryData = response;
       });
   }
 

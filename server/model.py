@@ -49,27 +49,25 @@ class Model:
     except ValidationError as ve:
       self.logger.error(ve.errors())
 
-  def get_titles(self, title: str, director: str, actor: str) -> List[Title]:
+  def get_titles(self, **kwargs) -> List[Title]:
     """
     Get data for multiple titles by searching by partial title and/or director matches.
     """
     results = []
     query_addon = []
-    if title:
-      query_addon.append(f"title LIKE '%{title}%'")
-    if director:
-      query_addon.append(f"director LIKE '%{director}%'")
-    if actor:
-      query_addon.append(f"castList LIKE '%{actor}%'")
+    query_params = []
+    for key, val in kwargs.items():
+      if val:
+        query_addon.append(f"{key} LIKE ?")
+        query_params += ['%'+val+'%']
     if query_addon:
-      query_addon = " AND ".join(query_addon)
+      query_addon = " WHERE " + " AND ".join(query_addon)
+    else:
+      query_addon = ""
     db_conn = sqlite3.connect(self.db_file)
     with db_conn:
       cur = db_conn.cursor()
-      if query_addon:
-        query = cur.execute("SELECT * FROM titles WHERE " + query_addon)
-      else:
-        query = cur.execute("SELECT * FROM titles")
+      query = cur.execute("SELECT * FROM titles" + query_addon, query_params)
       colnames = [des[0] for des in query.description]
       for row in cur.fetchall():
         title = {}
@@ -88,9 +86,11 @@ class Model:
     """
     results = []
     query_addon = []
+    query_params = []
     for key, val in kwargs.items():
       if val:
-        query_addon.append(f"{key} LIKE '%{val}%'")
+        query_addon.append(f"{key} LIKE ?")
+        query_params += ['%'+val+'%']
     if query_addon:
       query_addon = " AND " + " AND ".join(query_addon)
     else:
@@ -102,7 +102,7 @@ class Model:
         FROM titles \
         WHERE {col} IS NOT NULL {query_addon} \
         GROUP BY {col}"
-      cur.execute(query_str)
+      cur.execute(query_str, query_params)
       for row in cur.fetchall():
         try:
           results.append(DataPoint(**{ 'name': row[0], 'value': row[1] }))
@@ -119,9 +119,11 @@ class Model:
     """
     results = []
     query_addon = []
+    query_params = []
     for key, val in kwargs.items():
       if val:
-        query_addon.append(f"{key} LIKE '%{val}%'")
+        query_addon.append(f"{key} LIKE ?")
+        query_params += ['%'+val+'%']
     if query_addon:
       query_addon = " AND " + " AND ".join(query_addon)
     else:
@@ -130,7 +132,7 @@ class Model:
     with db_conn:
       cur = db_conn.cursor()
       query_str = f"SELECT {col} FROM titles WHERE {col} IS NOT NULL {query_addon}"
-      cur.execute(query_str)
+      cur.execute(query_str, query_params)
       result_dict = {}
       for row in cur.fetchall():
         row_vals = row[0].split(',')

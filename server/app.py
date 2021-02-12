@@ -50,7 +50,7 @@ async def get_titles(
 ) -> List[Title]:
   if id:
     return [cltr.model.get_title(id)]
-  return cltr.model.get_titles(title, director, actor)
+  return cltr.model.get_titles(title=title, director=director, actor=actor)
 
 @app.get('/year')
 async def get_years(
